@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style module lang="scss">
+<style lang="scss">
 html {
   height: 100%;
   font-size: $root-font-size;
@@ -37,5 +37,8 @@ a {
     border-color: $accent;
     outline: none;
   }
+}
+p {
+  margin: 0;
 }
 </style>

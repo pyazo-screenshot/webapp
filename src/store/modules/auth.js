@@ -10,6 +10,23 @@ const getters = {
   errors: state => state.errors,
 }
 
+const mutations = {
+  login(state, access_token) {
+    AuthApi.setAuthHeader(access_token)
+    localStorage.setItem('access_token', access_token)
+    state.status = true
+  },
+
+  logout(state) {
+    localStorage.clear()
+    state.status = false
+  },
+
+  addError(state, error) {
+    state.errors.push(error)
+  },
+}
+
 const actions = {
   async initialize({ commit }) {
     const token = localStorage.getItem('access_token')
@@ -40,24 +57,15 @@ const actions = {
       console.error(error)
     }
   },
-}
 
-const mutations = {
-  login(access_token) {
-    AuthApi.setAuthHeader(access_token)
-    localStorage.setItem('access_token', access_token)
-    state.status = true
-  },
-
-  logout() {
-    localStorage.clear()
-    state.status = false
+  async addError({ commit }, error) {
+    commit('addError', error)
   },
 }
 
 export default {
   state,
   getters,
-  actions,
   mutations,
+  actions,
 }

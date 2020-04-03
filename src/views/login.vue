@@ -20,6 +20,7 @@
         <p
           v-for="(error, index) in errors"
           :key="index"
+          :class="$style['errors']"
         >
           {{ error }}
         </p>
@@ -33,7 +34,7 @@
           @click="submit"
         />
         <span :class="$style['signup-link']">
-          Don't have an account? <router-link to="/login">Sign up</router-link>
+          Don't have an account? <router-link to="/register">Sign up</router-link>
         </span>
       </form>
     </div>
@@ -60,7 +61,6 @@ export default {
   methods: {
     ...mapActions('auth', ['login']),
     async submit() {
-      console.log(this.form)
       try {
         await this.login(this.form)
         this.$router.push({name: 'images'})
@@ -81,8 +81,8 @@ export default {
   align-items: center;
 
   .wrapper { /* TODO: nested?*/
-    display: flex;
     width: 100%;
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -110,11 +110,13 @@ export default {
       }
     }
   }
-}
-
-@media (min-width: 750px) {
-  .wrapper {
-    width: 26rem;
+  @media (min-width: 750px) {
+    .wrapper {
+      width: 26rem;
+    }
   }
+}
+.errors {
+  color: $error;
 }
 </style>

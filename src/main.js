@@ -19,7 +19,7 @@ function configureHttp() {
     },
     error => {
       if (error.response && error.response.status === 401) {
-        store.dispatch('logout')
+        store.dispatch('auth/logout')
         return Promise.reject(error)
       }
 

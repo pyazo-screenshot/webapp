@@ -51,7 +51,7 @@ router.beforeEach((to, from, next) => {
     to.matched.some(record => record.meta.requiresAuth) &&
     !store.getters.authStatus
   ) {
-    store.dispatch('logout')
+    store.dispatch('auth/logout')
     next({
       name: 'login',
       query: { redirect: to.fullPath },
