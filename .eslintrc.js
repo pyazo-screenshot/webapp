@@ -1,24 +1,23 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true,
-  },
-  'extends': [
-    'plugin:vue/recommended',
-    'eslint:recommended',
-  ],
-  parserOptions: {
-    parser: 'babel-eslint',
-  },
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  plugins: ['import'],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    quotes: ['error', 'single'],
-    'comma-dangle': [
-      'error',
-      'always-multiline',
-    ],
-    'comma-spacing': 'error',
-    'semi': ['error', 'never'],
+    'import/no-default-export': 'error',
+    'prefer-const': 'error',
   },
-}
+  env: {
+    es6: true,
+    browser: true,
+    node: true,
+    jest: true,
+  },
+  parserOptions: {
+    sourceType: 'module',
+    ecmaVersion: 2018,
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+};
