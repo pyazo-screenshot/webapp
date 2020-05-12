@@ -1,27 +1,27 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 
 import { isAuthenticated } from './utils/AuthUtils';
-import { SocketPage } from './pages/SocketPage';
+import { ImagesPage } from './pages/ImagesPage';
 
 // eslint-disable-next-line
-export function PrivateRoute({ component, ...rest }) {
+export function PrivateRoute({ component: Component, location, ...rest }) {
   const authenticated = isAuthenticated();
 
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={(props) =>
         authenticated ? (
-          component
+          <Component {...props} />
         ) : (
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: location },
+              state: { from: props.location },
             }}
           />
         )
@@ -29,6 +29,10 @@ export function PrivateRoute({ component, ...rest }) {
     />
   );
 }
+
+PrivateRoute.propTypes = {
+  location: PropTypes.string.isRequired,
+};
 
 export const routes = [
   {
@@ -43,7 +47,7 @@ export const routes = [
   },
   {
     path: '/',
-    component: SocketPage,
+    component: ImagesPage,
     isPublic: false,
   },
 ];

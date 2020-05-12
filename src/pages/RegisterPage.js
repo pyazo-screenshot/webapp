@@ -5,10 +5,10 @@ import axios from 'axios';
 
 import { Input } from '../components/Input';
 import { Form } from '../components/Form';
+import { Image } from '../components/Image';
 import { Button } from '../components/Button';
 import { Link } from '../components/Link';
 import { Page } from './Page';
-import { regex } from '../regex';
 import { storeAccessToken } from '../utils/AuthUtils';
 
 export function RegisterPage() {
@@ -22,7 +22,7 @@ export function RegisterPage() {
 
   function onSubmit(data) {
     axios
-      .post('/auth/register', data)
+      .post('http://localhost:8000/auth/register', data)
       .then(({ data: response }) => {
         storeAccessToken(response.data.access_token);
         history.push('/');
@@ -35,26 +35,26 @@ export function RegisterPage() {
   return (
     <Page.CenteredContent>
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <Image src="logo.svg" />
         <Form.Title>Let&apos;s set up your new account</Form.Title>
         <Form.Field>
-          <Form.Field.Label htmlFor="email">Email</Form.Field.Label>
+          <Form.Field.Label htmlFor="username">username</Form.Field.Label>
           <Input
-            id="email"
-            name="email"
-            placeholder="Enter your email address"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
             ref={register({
               required: true,
-              pattern: regex.email,
             })}
           />
-          {errors.email && errors.email.type === 'required' && (
+          {errors.username && errors.username.type === 'required' && (
             <Form.Field.ErrorMessage>
-              Please enter your email address
+              Please enter your username
             </Form.Field.ErrorMessage>
           )}
-          {errors.email && errors.email.type === 'pattern' && (
+          {errors.username && errors.username.type === 'pattern' && (
             <Form.Field.ErrorMessage>
-              Please enter a valid email address
+              Please enter a valid username
             </Form.Field.ErrorMessage>
           )}
         </Form.Field>
@@ -67,7 +67,7 @@ export function RegisterPage() {
             placeholder="Enter your password"
             ref={register({
               required: true,
-              minLength: 8,
+              minLength: 4,
             })}
           />
           {errors.password && errors.password.type === 'required' && (

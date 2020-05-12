@@ -9,7 +9,6 @@ import { Button } from '../components/Button';
 import { Link } from '../components/Link';
 import { Image } from '../components/Image';
 import { Page } from './Page';
-import { regex } from '../regex';
 import { storeAccessToken } from '../utils/AuthUtils';
 
 export function LoginPage() {
@@ -20,7 +19,7 @@ export function LoginPage() {
     axios
       .post('/auth/login', data)
       .then(({ data: response }) => {
-        storeAccessToken(response.data.access_token);
+        storeAccessToken(response.access_token);
         history.push('/');
       })
       .catch(() => {
@@ -31,27 +30,21 @@ export function LoginPage() {
   return (
     <Page.CenteredContent>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Image src="logo.svg" />         
+        <Image src="logo.svg" />
         <Form.Title>Welcome to Pyazo</Form.Title>
         <Form.Field>
-          <Form.Field.Label htmlFor="email">Email</Form.Field.Label>
+          <Form.Field.Label htmlFor="username">Username</Form.Field.Label>
           <Input
-            id="email"
-            name="email"
-            placeholder="Enter your email address"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
             ref={register({
               required: true,
-              pattern: regex.email,
             })}
           />
-          {errors.email && errors.email.type === 'required' && (
+          {errors.username && errors.username.type === 'required' && (
             <Form.Field.ErrorMessage>
-              Please enter your email address
-            </Form.Field.ErrorMessage>
-          )}
-          {errors.email && errors.email.type === 'pattern' && (
-            <Form.Field.ErrorMessage>
-              Please enter a valid email address
+              Please enter your username
             </Form.Field.ErrorMessage>
           )}
         </Form.Field>
@@ -64,7 +57,7 @@ export function LoginPage() {
             placeholder="Enter your password"
             ref={register({
               required: true,
-              minLength: 8,
+              minLength: 4,
             })}
           />
           {errors.password && errors.password.type === 'required' && (
@@ -79,7 +72,7 @@ export function LoginPage() {
           )}
           {errors.password && errors.password.type === 'incorrect' && (
             <Form.Field.ErrorMessage>
-              The email and password combination is incorrect
+              The username and password combination is incorrect
             </Form.Field.ErrorMessage>
           )}
         </Form.Field>

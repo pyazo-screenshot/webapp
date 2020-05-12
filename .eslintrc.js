@@ -1,9 +1,11 @@
 module.exports = {
   extends: ['eslint:recommended', 'plugin:react/recommended'],
-  plugins: ['import'],
+  plugins: ['import', 'react-hooks'],
   rules: {
     'import/no-default-export': 'error',
     'prefer-const': 'error',
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
   },
   env: {
     es6: true,

@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin')
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   theme: {
@@ -11,24 +11,32 @@ module.exports = {
         },
         background: {
           default: '#16161A',
-          dark: '#101013'
+          dark: '#101013',
         },
-        white: '#FFFFFE'
-      }
-    }
+        white: '#FFFFFE',
+      },
+    },
   },
 
   plugins: [
-    plugin(function ({addBase, config}) {
-      console.log(config('theme.colors'));
+    plugin(function ({ addBase, config }) {
       addBase({
-        'html': {backgroundColor: config('theme.colors.background'), background: config('theme.colors.background')},
-        'body': {backgroundColor: config('theme.colors.background'), background: config('theme.colors.background')},
-        'div': {backgroundColor: config('theme.colors.background'), background: config('theme.colors.background')},
-        'h1': {fontSize: config('theme.fontSize.2xl')},
-        'h2': {fontSize: config('theme.fontSize.xl')},
-        'h3': {fontSize: config('theme.fontSize.lg')},
-      })
-    })
-  ]
+        html: {
+          backgroundColor: config('theme.colors.background'),
+          background: config('theme.colors.background'),
+        },
+        body: {
+          backgroundColor: config('theme.colors.background'),
+          background: config('theme.colors.background'),
+        },
+        div: {
+          backgroundColor: config('theme.colors.background'),
+          background: config('theme.colors.background'),
+        },
+        h1: { fontSize: config('theme.fontSize.2xl') },
+        h2: { fontSize: config('theme.fontSize.xl') },
+        h3: { fontSize: config('theme.fontSize.lg') },
+      });
+    }),
+  ],
 };
