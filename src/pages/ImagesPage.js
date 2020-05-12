@@ -32,7 +32,7 @@ export function ImagesPage() {
           ...prev,
           ...data.results.map((image) => ({
             ...image,
-            imageUrl: `https://pyazo.com/${image.id}`,
+            imageUrl: `${process.env.REACT_APP_API_BASE_URL}/${image.id}`,
             imageAlt: image.id,
             description: image.id,
             title: image.id,
