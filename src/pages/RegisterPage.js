@@ -11,6 +11,8 @@ import { Link } from '../components/Link';
 import { Page } from './Page';
 import { storeAccessToken } from '../utils/AuthUtils';
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://pyazo.com';
+
 export function RegisterPage() {
   const history = useHistory();
   const { register, errors, handleSubmit, getValues } = useForm();
@@ -22,7 +24,7 @@ export function RegisterPage() {
 
   function onSubmit(data) {
     axios
-      .post('http://localhost:8000/auth/register', data)
+      .post(`${baseUrl}/auth/register`, data)
       .then(({ data: response }) => {
         storeAccessToken(response.data.access_token);
         history.push('/');
