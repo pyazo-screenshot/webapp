@@ -66,7 +66,7 @@ export function ImagesPage() {
         {images.map((image) => (
           <Grid.Row.Item key={image.id} itemsPerRow="3">
             <Card>
-              <a href={image.url} target="_blank" noreferrer noopener nofollow>
+              <a href={image.url} target="_blank" rel="noopener noreferrer">
                 <Image src={image.url} alt={image.alt} fullWidth />
               </a>
               <Card.Body>
