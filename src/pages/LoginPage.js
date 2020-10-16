@@ -77,9 +77,6 @@ export function LoginPage() {
           )}
         </Form.Field>
         <Form.Field>
-          <Link to="/register">Sign up</Link>
-        </Form.Field>
-        <Form.Field>
           <Button type="submit">LOG IN</Button>
         </Form.Field>
         <Form.Footer>

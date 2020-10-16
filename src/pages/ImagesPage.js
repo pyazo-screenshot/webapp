@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from '../components/Image';
 import { Card } from '../components/Card';
+import { Button } from '../components/Button';
 import { Grid } from '../components/Grid';
 import { Layout } from '../components/Layout';
 import { useInView } from 'react-intersection-observer';
@@ -19,6 +20,17 @@ export function ImagesPage() {
     }
     getImages(pagination);
   }, [inView, pagination]);
+
+  async function removeImage(imageId) {
+    axios
+      .delete(`/images/${imageId}`)
+      .then(() => {
+        setImages((prev) => prev.filter((image) => image.id !== imageId));
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
 
   async function getImages(pagination) {
     if (pagination.page == null) {
@@ -46,23 +58,22 @@ export function ImagesPage() {
 
   return (
     <Layout.Container>
-      {inView.toString()}
       <Grid>
-        {images.map((arst) => (
-          <Grid.Row.Item key={arst.id} itemsPerRow="3">
+        {images.map((image) => (
+          <Grid.Row.Item key={image.id} itemsPerRow="3">
             <Card>
-              <Image src={arst.imageUrl} fullWidth />
+              <Image src={image.imageUrl} fullWidth />
               <Card.Body>
-                <Card.Description>{arst.title}</Card.Description>
+                <Card.Description>{image.title}</Card.Description>
+                <Button onClick={() => removeImage(image.id)}>
+                  <Button.Icon src="trash-can.svg" />
+                </Button>
               </Card.Body>
             </Card>
           </Grid.Row.Item>
         ))}
       </Grid>
-      <div ref={ref}>OVO JE SAMO FIKTIVAN ITEM DA RADI LOAD MORE</div>
-      {inView.toString()}
-      {/*isFetching && 'Fetching images'*/}
-      {/*<Button onClick={getImages}>arst</Button>*/}
+      <div ref={ref}></div>
     </Layout.Container>
   );
 }
