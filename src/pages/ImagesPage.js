@@ -7,6 +7,8 @@ import { Layout } from '../components/Layout';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://pyazo.com';
+
 export function ImagesPage() {
   const [pagination, setPagination] = useState({ page: 0, perPage: 10 });
   const [images, setImages] = useState([]);
@@ -37,15 +39,17 @@ export function ImagesPage() {
       return;
     }
     return axios
-      .get(`/images?page=${pagination.page}&per_page=${pagination.perPage}`)
+      .get(
+        `${baseUrl}/images?page=${pagination.page}&per_page=${pagination.perPage}`
+      )
       .then(({ data }) => {
         setPagination((prev) => ({ ...prev, page: data.next_page }));
         setImages((prev) => [
           ...prev,
           ...data.results.map((image) => ({
             ...image,
-            imageUrl: `${process.env.REACT_APP_API_BASE_URL}/${image.id}`,
-            imageAlt: image.id,
+            url: `${baseUrl}/${image.id}`,
+            alt: image.id,
             description: image.id,
             title: image.id,
           })),
@@ -62,7 +66,9 @@ export function ImagesPage() {
         {images.map((image) => (
           <Grid.Row.Item key={image.id} itemsPerRow="3">
             <Card>
-              <Image src={image.imageUrl} fullWidth />
+              <a href={image.url} target="_blank" rel="noopener noreferrer">
+                <Image src={image.url} alt={image.alt} fullWidth />
+              </a>
               <Card.Body>
                 <Card.Description>{image.title}</Card.Description>
                 <Button onClick={() => removeImage(image.id)}>

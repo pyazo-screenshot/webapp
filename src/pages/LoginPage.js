@@ -11,13 +11,15 @@ import { Image } from '../components/Image';
 import { Page } from './Page';
 import { storeAccessToken } from '../utils/AuthUtils';
 
+const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://pyazo.com';
+
 export function LoginPage() {
   const history = useHistory();
   const { register, errors, handleSubmit, setError } = useForm();
 
   function onSubmit(data) {
     axios
-      .post('/auth/login', data)
+      .post(`${baseUrl}/auth/login`, data)
       .then(({ data: response }) => {
         storeAccessToken(response.access_token);
         history.push('/');
