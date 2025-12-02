@@ -9,9 +9,33 @@ import axios from 'axios';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://pyazo.com';
 
+interface Pagination {
+  page: number | null;
+  perPage: number;
+}
+
+interface ApiImage {
+  id: string;
+}
+
+interface DisplayImage extends ApiImage {
+  url: string;
+  alt: string;
+  description: string;
+  title: string;
+}
+
+interface ImagesResponse {
+  next_page: number | null;
+  results: ApiImage[];
+}
+
 export function ImagesPage() {
-  const [pagination, setPagination] = useState({ page: 0, perPage: 10 });
-  const [images, setImages] = useState([]);
+  const [pagination, setPagination] = useState<Pagination>({
+    page: 0,
+    perPage: 10,
+  });
+  const [images, setImages] = useState<DisplayImage[]>([]);
   const [ref, inView] = useInView({
     threshold: 1,
   });
@@ -23,7 +47,7 @@ export function ImagesPage() {
     getImages(pagination);
   }, [inView, pagination]);
 
-  function removeImage(imageId) {
+  function removeImage(imageId: string) {
     axios
       .delete(`/images/${imageId}`)
       .then(() => {
@@ -34,12 +58,12 @@ export function ImagesPage() {
       });
   }
 
-  function getImages(paginationParams) {
+  function getImages(paginationParams: Pagination) {
     if (paginationParams.page == null) {
       return;
     }
     axios
-      .get(
+      .get<ImagesResponse>(
         `${baseUrl}/images?page=${paginationParams.page}&per_page=${paginationParams.perPage}`
       )
       .then(({ data }) => {

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
 
 import { Input } from '../components/Input';
@@ -12,13 +12,27 @@ import { storeAccessToken } from '../utils/AuthUtils';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://pyazo.com';
 
+interface LoginFormData {
+  username: string;
+  password: string;
+}
+
+interface LoginResponse {
+  access_token: string;
+}
+
 export function LoginPage() {
   const navigate = useNavigate();
-  const { register, formState: { errors }, handleSubmit, setError } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setError,
+  } = useForm<LoginFormData>();
 
-  function onSubmit(data) {
+  function onSubmit(data: FieldValues) {
     axios
-      .post(`${baseUrl}/auth/login`, data)
+      .post<LoginResponse>(`${baseUrl}/auth/login`, data)
       .then(({ data: response }) => {
         storeAccessToken(response.access_token);
         navigate('/');

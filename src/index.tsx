@@ -18,7 +18,7 @@ if (accessToken) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 }
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')!).render(
   <>
     <GlobalStyle />
     <BrowserRouter>
@@ -34,7 +34,11 @@ createRoot(document.getElementById('root')).render(
             <Route
               key={route.path}
               path={route.path}
-              element={<PrivateRoute><route.component /></PrivateRoute>}
+              element={
+                <PrivateRoute>
+                  <route.component />
+                </PrivateRoute>
+              }
             />
           )
         )}
