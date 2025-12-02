@@ -3,8 +3,13 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ImagesPage } from './pages/ImagesPage';
 import { isAuthenticated } from './utils/AuthUtils';
+import { ComponentType, ReactNode } from 'react';
 
-export function PrivateRoute({ children }) {
+interface PrivateRouteProps {
+  children: ReactNode;
+}
+
+export function PrivateRoute({ children }: PrivateRouteProps) {
   const location = useLocation();
   const authenticated = isAuthenticated();
 
@@ -12,10 +17,16 @@ export function PrivateRoute({ children }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children;
+  return <>{children}</>;
 }
 
-export const routes = [
+interface RouteConfig {
+  path: string;
+  component: ComponentType;
+  isPublic: boolean;
+}
+
+export const routes: RouteConfig[] = [
   {
     path: '/login',
     component: LoginPage,

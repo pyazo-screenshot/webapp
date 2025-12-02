@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
 
 import { Input } from '../components/Input';
@@ -12,18 +12,35 @@ import { storeAccessToken } from '../utils/AuthUtils';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://pyazo.com';
 
+interface RegisterFormData {
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface RegisterResponse {
+  data: {
+    access_token: string;
+  };
+}
+
 export function RegisterPage() {
   const navigate = useNavigate();
-  const { register, formState: { errors }, handleSubmit, getValues } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    getValues,
+  } = useForm<RegisterFormData>();
 
-  function validatePasswordsMatch(confirmPassword) {
+  function validatePasswordsMatch(confirmPassword: string) {
     const { password } = getValues();
     return confirmPassword === password;
   }
 
-  function onSubmit(data) {
+  function onSubmit(data: FieldValues) {
     axios
-      .post(`${baseUrl}/auth/register`, data)
+      .post<RegisterResponse>(`${baseUrl}/auth/register`, data)
       .then(({ data: response }) => {
         storeAccessToken(response.data.access_token);
         navigate('/');
@@ -83,7 +100,10 @@ export function RegisterPage() {
             id="confirmPassword"
             type="password"
             placeholder="Enter your password once again"
-            {...register('confirmPassword', { required: true, validate: validatePasswordsMatch })}
+            {...register('confirmPassword', {
+              required: true,
+              validate: validatePasswordsMatch,
+            })}
           />
           {errors.confirmPassword &&
             errors.confirmPassword.type === 'required' && (

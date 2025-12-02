@@ -2,22 +2,11 @@
 
 Screenshot management application built with React.
 
-## Tech Stack
-
-- **React 19** - UI framework
-- **Vite 6** - Build tool and dev server
-- **React Router 6** - Client-side routing
-- **styled-components 6** - CSS-in-JS styling
-- **Twin.macro** - Tailwind CSS classes in styled-components
-- **Tailwind CSS 3** - Utility-first CSS framework
-- **react-hook-form 7** - Form handling
-- **Axios** - HTTP client
-
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 24+
 - Yarn
 
 ### Installation
