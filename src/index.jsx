@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 
-import 'tailwindcss/dist/base.css';
+import './index.css';
 
 import { routes, PrivateRoute } from './routes';
 import { GlobalStyle } from './styles/GlobalStyle';
@@ -11,9 +11,7 @@ import { getAccessToken } from './utils/AuthUtils';
 
 const accessToken = getAccessToken();
 
-window.axios = axios;
-
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
@@ -21,7 +19,7 @@ if (accessToken) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 }
 
-ReactDOM.render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GlobalStyle />
     <Router>
@@ -45,6 +43,5 @@ ReactDOM.render(
         )}
       </Switch>
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

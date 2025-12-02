@@ -31,7 +31,8 @@ export function PrivateRoute({ component: Component, location, ...rest }) {
 }
 
 PrivateRoute.propTypes = {
-  location: PropTypes.string.isRequired,
+  component: PropTypes.elementType.isRequired,
+  location: PropTypes.object,
 };
 
 export const routes = [

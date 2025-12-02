@@ -1,25 +1,28 @@
-module.exports = {
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
-  plugins: ['import', 'react-hooks'],
-  rules: {
-    'import/no-default-export': 'error',
-    'prefer-const': 'error',
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
-  },
+export default {
+  root: true,
   env: {
-    es6: true,
     browser: true,
+    es2020: true,
     node: true,
-    jest: true,
   },
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
+  ],
   parserOptions: {
+    ecmaVersion: 'latest',
     sourceType: 'module',
-    ecmaVersion: 2018,
   },
   settings: {
     react: {
       version: 'detect',
     },
+  },
+  rules: {
+    'prefer-const': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };

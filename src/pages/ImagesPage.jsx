@@ -7,7 +7,7 @@ import { Layout } from '../components/Layout';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://pyazo.com';
+const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://pyazo.com';
 
 export function ImagesPage() {
   const [pagination, setPagination] = useState({ page: 0, perPage: 10 });

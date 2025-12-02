@@ -11,11 +11,11 @@ import { Link } from '../components/Link';
 import { Page } from './Page';
 import { storeAccessToken } from '../utils/AuthUtils';
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://pyazo.com';
+const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://pyazo.com';
 
 export function RegisterPage() {
   const history = useHistory();
-  const { register, errors, handleSubmit, getValues } = useForm();
+  const { register, formState: { errors }, handleSubmit, getValues } = useForm();
 
   function validatePasswordsMatch(confirmPassword) {
     const { password } = getValues();
@@ -43,11 +43,8 @@ export function RegisterPage() {
           <Form.Field.Label htmlFor="username">username</Form.Field.Label>
           <Input
             id="username"
-            name="username"
             placeholder="Enter your username"
-            ref={register({
-              required: true,
-            })}
+            {...register('username', { required: true })}
           />
           {errors.username && errors.username.type === 'required' && (
             <Form.Field.ErrorMessage>
@@ -64,13 +61,9 @@ export function RegisterPage() {
           <Form.Field.Label htmlFor="password">Password</Form.Field.Label>
           <Input
             id="password"
-            name="password"
             type="password"
             placeholder="Enter your password"
-            ref={register({
-              required: true,
-              minLength: 4,
-            })}
+            {...register('password', { required: true, minLength: 4 })}
           />
           {errors.password && errors.password.type === 'required' && (
             <Form.Field.ErrorMessage>
@@ -89,13 +82,9 @@ export function RegisterPage() {
           </Form.Field.Label>
           <Input
             id="confirmPassword"
-            name="confirmPassword"
             type="password"
             placeholder="Enter your password once again"
-            ref={register({
-              required: true,
-              validate: validatePasswordsMatch,
-            })}
+            {...register('confirmPassword', { required: true, validate: validatePasswordsMatch })}
           />
           {errors.confirmPassword &&
             errors.confirmPassword.type === 'required' && (

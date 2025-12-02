@@ -11,11 +11,11 @@ import { Image } from '../components/Image';
 import { Page } from './Page';
 import { storeAccessToken } from '../utils/AuthUtils';
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://pyazo.com';
+const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://pyazo.com';
 
 export function LoginPage() {
   const history = useHistory();
-  const { register, errors, handleSubmit, setError } = useForm();
+  const { register, formState: { errors }, handleSubmit, setError } = useForm();
 
   function onSubmit(data) {
     axios
@@ -25,7 +25,7 @@ export function LoginPage() {
         history.push('/');
       })
       .catch(() => {
-        setError('password', 'incorrect');
+        setError('password', { type: 'incorrect' });
       });
   }
 
@@ -38,11 +38,8 @@ export function LoginPage() {
           <Form.Field.Label htmlFor="username">Username</Form.Field.Label>
           <Input
             id="username"
-            name="username"
             placeholder="Enter your username"
-            ref={register({
-              required: true,
-            })}
+            {...register('username', { required: true })}
           />
           {errors.username && errors.username.type === 'required' && (
             <Form.Field.ErrorMessage>
@@ -54,13 +51,9 @@ export function LoginPage() {
           <Form.Field.Label htmlFor="password">Password</Form.Field.Label>
           <Input
             id="password"
-            name="password"
             type="password"
             placeholder="Enter your password"
-            ref={register({
-              required: true,
-              minLength: 4,
-            })}
+            {...register('password', { required: true, minLength: 4 })}
           />
           {errors.password && errors.password.type === 'required' && (
             <Form.Field.ErrorMessage>
