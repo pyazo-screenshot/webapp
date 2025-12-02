@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Critical styles to prevent flash of unstyled content */
+html, body, #root {
+  width: 100vw;
+  height: 100vh;
+  background-color: #16161A;
+}

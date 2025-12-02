@@ -1,5 +1,4 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
@@ -14,7 +13,7 @@ import { storeAccessToken } from '../utils/AuthUtils';
 const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://pyazo.com';
 
 export function RegisterPage() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { register, formState: { errors }, handleSubmit, getValues } = useForm();
 
   function validatePasswordsMatch(confirmPassword) {
@@ -27,7 +26,7 @@ export function RegisterPage() {
       .post(`${baseUrl}/auth/register`, data)
       .then(({ data: response }) => {
         storeAccessToken(response.data.access_token);
-        history.push('/');
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);

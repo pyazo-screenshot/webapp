@@ -1,39 +1,19 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Navigate, useLocation } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
-
-import { isAuthenticated } from './utils/AuthUtils';
 import { ImagesPage } from './pages/ImagesPage';
+import { isAuthenticated } from './utils/AuthUtils';
 
-// eslint-disable-next-line
-export function PrivateRoute({ component: Component, location, ...rest }) {
+export function PrivateRoute({ children }) {
+  const location = useLocation();
   const authenticated = isAuthenticated();
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        authenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: props.location },
-            }}
-          />
-        )
-      }
-    />
-  );
-}
+  if (!authenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-PrivateRoute.propTypes = {
-  component: PropTypes.elementType.isRequired,
-  location: PropTypes.object,
-};
+  return children;
+}
 
 export const routes = [
   {

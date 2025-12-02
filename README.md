@@ -1,33 +1,67 @@
-## Available Scripts
+# Pyazo Web App
 
-In the project directory, you can run:
+Screenshot management application built with React.
 
-### `yarn start`
+## Tech Stack
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **React 19** - UI framework
+- **Vite 6** - Build tool and dev server
+- **React Router 6** - Client-side routing
+- **styled-components 6** - CSS-in-JS styling
+- **Twin.macro** - Tailwind CSS classes in styled-components
+- **Tailwind CSS 3** - Utility-first CSS framework
+- **react-hook-form 7** - Form handling
+- **Axios** - HTTP client
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Getting Started
 
-### `yarn test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.<br />
+- Node.js 18+
+- Yarn
 
-### `yarn build`
+### Installation
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+yarn install
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Development
 
-### `yarn eject`
+```bash
+yarn dev
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Opens the app at [http://localhost:3000](http://localhost:3000)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Production Build
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+yarn build
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Preview Production Build
+
+```bash
+yarn preview
+```
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```
+VITE_API_BASE_URL=https://pyazo.com
+```
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── pages/          # Page components
+├── styles/         # Global styles
+├── utils/          # Utility functions
+├── routes.jsx      # Route definitions
+└── index.jsx       # App entry point
+```

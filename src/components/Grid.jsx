@@ -9,6 +9,8 @@ Grid.Row = styled.div`
   ${tw`w-full flex`}
 `;
 
-Grid.Row.Item = styled.div`
+Grid.Row.Item = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'itemsPerRow',
+})`
   ${tw`w-full sm:w-1/3 md:w-1/6 lg:w-1/6 xl:w-2/12 px-2 py-4`}
 `;

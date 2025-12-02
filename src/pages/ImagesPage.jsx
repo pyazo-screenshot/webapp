@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image } from '../components/Image';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
@@ -23,7 +23,7 @@ export function ImagesPage() {
     getImages(pagination);
   }, [inView, pagination]);
 
-  async function removeImage(imageId) {
+  function removeImage(imageId) {
     axios
       .delete(`/images/${imageId}`)
       .then(() => {
@@ -34,13 +34,13 @@ export function ImagesPage() {
       });
   }
 
-  async function getImages(pagination) {
-    if (pagination.page == null) {
+  function getImages(paginationParams) {
+    if (paginationParams.page == null) {
       return;
     }
-    return axios
+    axios
       .get(
-        `${baseUrl}/images?page=${pagination.page}&per_page=${pagination.perPage}`
+        `${baseUrl}/images?page=${paginationParams.page}&per_page=${paginationParams.perPage}`
       )
       .then(({ data }) => {
         setPagination((prev) => ({ ...prev, page: data.next_page }));
@@ -66,9 +66,11 @@ export function ImagesPage() {
         {images.map((image) => (
           <Grid.Row.Item key={image.id} itemsPerRow="3">
             <Card>
-              <a href={image.url} target="_blank" rel="noopener noreferrer">
-                <Image src={image.url} alt={image.alt} fullWidth />
-              </a>
+              <Card.ImageContainer>
+                <a href={image.url} target="_blank" rel="noopener noreferrer">
+                  <Image src={image.url} alt={image.alt} $fullWidth />
+                </a>
+              </Card.ImageContainer>
               <Card.Body>
                 <Card.Description>{image.title}</Card.Description>
                 <Button onClick={() => removeImage(image.id)}>
