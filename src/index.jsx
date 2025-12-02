@@ -1,6 +1,5 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import './index.css';
@@ -20,28 +19,26 @@ if (accessToken) {
 }
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
     <GlobalStyle />
-    <Router>
-      <Switch>
-        {routes.map((route, key) =>
+    <BrowserRouter>
+      <Routes>
+        {routes.map((route) =>
           route.isPublic ? (
             <Route
-              key={key}
+              key={route.path}
               path={route.path}
-              component={route.component}
-              exact
+              element={<route.component />}
             />
           ) : (
-            <PrivateRoute
-              key={key}
+            <Route
+              key={route.path}
               path={route.path}
-              component={route.component}
-              exact
+              element={<PrivateRoute><route.component /></PrivateRoute>}
             />
           )
         )}
-      </Switch>
-    </Router>
-  </React.StrictMode>
+      </Routes>
+    </BrowserRouter>
+  </>
 );
