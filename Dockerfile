@@ -13,5 +13,5 @@ FROM nginx:latest
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
-COPY --from=builder /app/build /srv/http/pyazo-webapp
+COPY --from=builder /app/build/ /app/
 COPY nginx.conf /etc/nginx/conf.d/default.conf

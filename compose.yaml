@@ -1,0 +1,46 @@
+---
+services:
+  db:
+    image: postgres:18
+    restart: unless-stopped
+    networks:
+      - internal
+    env_file:
+      - .env
+    volumes:
+      - db:/var/lib/postgresql
+
+  api:
+    image: pyazo/api
+    restart: unless-stopped
+    volumes:
+      - images:/images
+    networks:
+      - internal
+    env_file:
+      - .env
+
+  app:
+    image: pyazo/app
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pyazo.rule=Host(`pyazo.com`) || Host(`app.pyazo.com`)
+      - traefik.http.routers.pyazo.entrypoints=websecure
+      - traefik.http.routers.pyazo.tls.certresolver=le
+      - traefik.http.services.pyazo.loadbalancer.server.port=80
+    networks:
+      - internal
+      - ingress
+    volumes:
+      - images:/images:ro
+
+volumes:
+  db:
+  images:
+
+networks:
+  ingress:
+    external: true
+  internal:
+    internal: true
